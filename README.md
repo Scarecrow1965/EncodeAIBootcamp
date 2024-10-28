@@ -14,6 +14,9 @@ A conversational AI assistant that helps users with Italian cooking by providing
 
 Program uses basic pattern matching to determine which of the three features the user is asking about.  With commas and "ands", it is assumed to be a list of ingrediants and there is a small dictionary of cooking related keywords that indicate a recipe.  Anything outside of these patterns is assumed to be a request for recipe instructions (or potentially invalid).
 
+ChefGPT_MLittle_I2.py
+The AI assistant is an Italian American from The Bronx in New York City and is passionate about Italian cuisine but doesn't have deep knowledge.  As such, this persona will answer questions like "Poutine" and "Hoagie" and respond with an Italian flare where the Italian chef will not entertain these questions.
+
 ## Prerequisites
 
 - Python 3.7+
