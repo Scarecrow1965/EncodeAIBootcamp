@@ -17,10 +17,17 @@ Program uses basic pattern matching to determine which of the three features the
 ChefGPT_MLittle_I2.py
 The AI assistant is an Italian American from The Bronx in New York City and is passionate about Italian cuisine but doesn't have deep knowledge.  As such, this persona will answer questions like "Poutine" and "Hoagie" and respond with an Italian flare where the Italian chef will not entertain these questions.
 
+ChefGPT-Scarecrow1965.py
+Is the basic Italian chef that should provide healthy dishes which ingredients should be compliant with both imerial and metric measurements.
+
 ## Prerequisites
 
 - Python 3.7+
 - OpenAI API key
 - Required Python packages:
+for Linux/MacOS:
   ```bash
+  pip install openai
+for Windows:
+ ```command prompt
   pip install openai
