@@ -2,9 +2,9 @@
 
 To consolidate the knowledge acquired this week, students should complete the following project:
 
-1. Create a GitHub repository for your project
-2. Add all members of your group as collaborators
-3. Create a README.md file with a description of your project
+1. Create a GitHub repository for your project - Done
+2. Add all members of your group as collaborators - Done
+3. Create a README.md file with a description of your project - Done
 4. Create a new application from scratch using NextJS
 5. Develop a page for generating jokes using AI
 6. Add a feature for users to customize the Joke Parameters
