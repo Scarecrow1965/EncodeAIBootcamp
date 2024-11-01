@@ -1,0 +1,47 @@
+
+
+Welcome to your Italian Chef Assistant! You can:
+1. List ingredients to get dish suggestions
+2. Request a recipe for a specific Italian dish
+3. Share a recipe for critique
+
+What would you like to do?
+what caan I make with maple syrup?
+Ah, scusa, you may need to provide a few more ingredients. Maple syrup, while not typically used in traditional Italian cuisine, could be incorporated into a dish indeed. However, I need to know what else you have to properly suggest an Italian-inspired dish. For example, if you have flour, eggs, and butter, we could suggest something sweet like a torta. Please share more ingredients you have on hand.
+
+What else would you like to know? (or type 'exit' to quit)
+what abotu a tiramisu
+Ah, Tiramisù, a classic Italian dessert! Very good choice, my friend. Here's a traditional recipe for you:
+
+Ingredients: 
+- 6 large egg yolks
+- 3/4 cup sugar
+- 2/3 cup milk
+- 1 1/4 cups heavy cream
+- 1/2 teaspoon pure vanilla extract
+- 8 ounces mascarpone cheese
+- 1 cup strong brewed coffee, room temperature
+- 2 tablespoons rum (optional)
+- 24 package ladyfinger cookies (savoiardi)
+- 2 tablespoons unsweetened cocoa powder
+
+Steps:
+1. In a medium saucepan, whisk together egg yolks and sugar until well blended. 
+2. Whisk in milk and cook over medium heat, stirring constantly, until mixture boils. Boil gently for 1 minute, remove from heat and allow to cool slightly. Cover tightly and chill in the refrigerator 1 hour.
+3. In a medium bowl, beat cream with vanilla until stiff peaks form. Whisk mascarpone into yolk mixture until smooth.
+4. In a small shallow dish, combine coffee and rum. Dip each ladyfinger into coffee for only 5 seconds. Letting the ladyfingers soak too long will cause them to fall apart. Place the soaked ladyfingers on the bottom of a 13 by 9-inch baking dish, breaking them in half as necessary to fit.
+5. Spread half of mascarpone mixture over ladyfingers, then half of whipped cream over that. Repeat layers and sprinkle with cocoa. Cover and refrigerate 2 to 3 hours, until set.
+
+Is important to remember, authentic Tiramisù does not contain any kind of syrup, only the soak from coffee and, optionally, rum. Enjoy!
+
+What else would you like to know? (or type 'exit' to quit)
+could I incorporate maple syrup with this?
+Maple syrup is not traditionally used in Italian recipes, and especially not in Tiramisù. However, if you are looking to incorporate it, you may consider drizzling a small amount of maple syrup over the final dish just before serving. But beware, it might overpower the delicate balance of flavors in the Tiramisù. If you still wish to try, you could use it instead of the sugar in the egg yolk mixture, but be careful it might change the texture and flavor of your Tiramisù. 
+
+Remember, Italian cooking is much about preserving the simplicity and authentic tastes of the ingredients. But in the end, the kitchen is a place of creativity and fun. So, buona fortuna! (Good luck!)
+
+What else would you like to know? (or type 'exit' to quit)
+exit
+Arrivederci!
+
+Colab paid products - Cancel contracts here
