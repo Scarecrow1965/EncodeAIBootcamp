@@ -109,23 +109,57 @@ import { useChat } from "ai/react";
 export default function Chat() {
   const { messages, append, isLoading } = useChat();
 
-  const genres = [
-    { emoji: "🧙", value: "Fantasy" },
-    { emoji: "🕵️", value: "Mystery" },
-    { emoji: "💑", value: "Romance" },
-    { emoji: "🚀", value: "Sci-Fi" },
+  const topics = [
+    { value: "Work" },
+    { value: "People" },
+    { value: "Animals" },
+    { value: "Food" },
+    { value: "Television" },
   ];
 
   const tones = [
-    { emoji: "😊", value: "Happy" },
-    { emoji: "😢", value: "Sad" },
-    { emoji: "😏", value: "Sarcastic" },
-    { emoji: "😂", value: "Funny" },
+    { value: "Witty" },
+    { value: "Sarcastic" },
+    { value: "Silly" },
+    { value: "Dark" },
+    { value: "Goofy" },
+  ];
+
+  const types = [
+    { value: "Pun" },
+    { value: "Knock-Knock" },
+    { value: "Story" },
+    { value: "One-line" },
+    { value: "Satire" },
+  ];
+
+  const temperature = [ 
+    {value: "0.0"},
+    {value: "0.1"},
+    {value: "0.2"},
+    {value: "0.3"},
+    {value: "0.4"},
+    {value: "0.5"},
+    {value: "0.6"},
+    {value: "0.7"},
+    {value: "0.8"},
+    {value: "0.9"},
+    {value: "1.0"},
+  ];
+
+  const subjective = [
+    {value: "Funny"},
+    {value: "Appropriate"},
+    {value: "Offensive"},
+    {value: "Creative"},
+    {value: "Original"},
   ];
 
   const [state, setState] = useState({
-    genre: "",
-    tone: "",
+    topics: "",
+    tones: "",
+    types: "",
+    temperatures: "",
   });
   
   const handleChange = ({
@@ -144,15 +178,16 @@ export default function Chat() {
           <div className="space-y-2">
             <h2 className="text-3xl font-bold">Story Telling App</h2>
             <p className="text-zinc-500 dark:text-zinc-400">
-              Customize the story by selecting the genre and tone.
+              Customize a joke by selecting the genre, tone, type and how creative OpenAI can be.
             </p>
           </div>
 
+          {/* TOPICS */}
           <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
-            <h3 className="text-xl font-semibold">Genre</h3>
+            <h3 className="text-xl font-semibold">Topics</h3>
 
             <div className="flex flex-wrap justify-center">
-              {genres.map(({ value, emoji }) => (
+              {topics.map(({value}) => (
                 <div
                   key={value}
                   className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg"
@@ -161,22 +196,23 @@ export default function Chat() {
                     id={value}
                     type="radio"
                     value={value}
-                    name="genre"
+                    name="topic"
                     onChange={handleChange}
                   />
                   <label className="ml-2" htmlFor={value}>
-                    {`${emoji} ${value}`}
+                    {`${value}`}
                   </label>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* TONES */}
           <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
             <h3 className="text-xl font-semibold">Tones</h3>
 
             <div className="flex flex-wrap justify-center">
-              {tones.map(({ value, emoji }) => (
+              {tones.map(({value}) => (
                 <div
                   key={value}
                   className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg"
@@ -189,20 +225,71 @@ export default function Chat() {
                     onChange={handleChange}
                   />
                   <label className="ml-2" htmlFor={value}>
-                    {`${emoji} ${value}`}
+                    {`${value}`}
                   </label>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* TYPES */}
+          <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
+            <h3 className="text-xl font-semibold">Types</h3>
+
+            <div className="flex flex-wrap justify-center">
+              {types.map(({value}) => (
+                <div
+                  key={value}
+                  className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg"
+                >
+                  <input
+                    id={value}
+                    type="radio"
+                    name="type"
+                    value={value}
+                    onChange={handleChange}
+                  />
+                  <label className="ml-2" htmlFor={value}>
+                    {`${value}`}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* TEMPERATURE */}
+          <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
+            <h3 className="text-xl font-semibold">Temperatures</h3>
+
+            <div className="flex flex-wrap justify-center">
+              {temperature.map(({value}) => (
+                <div
+                  key={value}
+                  className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg"
+                >
+                  <input
+                    id={value}
+                    type="radio"
+                    name="temps"
+                    value={value}
+                    onChange={handleChange}
+                  />
+                  <label className="ml-2" htmlFor={value}>
+                    {`${value}`}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* BUTTON */}
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
-            disabled={isLoading || !state.genre || !state.tone}
+            disabled={isLoading || !state.topics || !state.tones || !state.types || !state.temperatures}
             onClick={() =>
               append({
                 role: "user",
-                content: `Generate a ${state.genre} story in a ${state.tone} tone`,
+                content: `Generate a ${state.topics} joke in a ${state.tones} tone, using the ${state.types} type of humor and ${state.temperatures} degree to which is said.`,
               })
             }
           >
