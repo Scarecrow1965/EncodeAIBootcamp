@@ -66,6 +66,10 @@ To consolidate the knowledge acquired this week, students should complete the fo
 ```bash
 npm install ai @ai-sdk/openai
 ```
+6a. MLittle added the following dependency:
+```bash
+npm install @vercel/analytics
+```
 
 7. **** NOTE: Configure OPEN API KEY to a local envirnoment variable if you have not already done so. ****
   - If not then:
