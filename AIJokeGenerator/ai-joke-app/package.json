@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@ai-sdk/openai": "^0.0.71",
     "ai": "^3.4.31",
     "next": "15.0.2",
@@ -16,12 +17,23 @@
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "rimraf": "^6.0.1"
+=======
+    "ai": "^3.4.31",
+    "next": "15.0.2",
+    "openai": "^4.70.2",
+    "react": "19.0.0-rc-02c0e824-20241028",
+    "react-dom": "19.0.0-rc-02c0e824-20241028"
+>>>>>>> 0dc82ed1f16afebfe7cd217d353b70c678ec1d7e
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+<<<<<<< HEAD
     "eslint": "^8.57.1",
+=======
+    "eslint": "^8",
+>>>>>>> 0dc82ed1f16afebfe7cd217d353b70c678ec1d7e
     "eslint-config-next": "15.0.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",

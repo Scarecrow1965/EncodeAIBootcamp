@@ -16,6 +16,10 @@
 # next.js
 /.next/
 /out/
+<<<<<<< HEAD
+=======
+/dist/
+>>>>>>> 0dc82ed1f16afebfe7cd217d353b70c678ec1d7e
 
 # production
 /build
