@@ -64,7 +64,7 @@ To consolidate the knowledge acquired this week, students should complete the fo
 
 6. Add another important dependency library:
 ```bash
-npm install ai openai
+npm install ai @ai-sdk/openai
 ```
 
 7. **** NOTE: Configure OPEN API KEY to a local envirnoment variable if you have not already done so. ****
