@@ -6,6 +6,6 @@ You as collaborators will be able to upload your files to the respected director
 
 Enjoy!
 
-    First homewok was to create a ChefGPT model. It is located in the directory aptly named as such
-    Second homework was to create an AI Joke generator. Again, the directory is aptly named as such.
+- First homewok was to create a ChefGPT model. It is located in the directory aptly named as such
+- Second homework was to create an AI Joke generator. Again, the directory is aptly named as such.
     
