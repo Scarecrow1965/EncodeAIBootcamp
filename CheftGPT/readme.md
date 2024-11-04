@@ -20,6 +20,8 @@ The AI assistant is an Italian American from The Bronx in New York City and is p
 ChefGPT-Scarecrow1965.py
 Is the basic Italian chef that should provide healthy dishes which ingredients should be compliant with both imerial and metric measurements.
 
+Chef-GPT_itsjenm.py In this modified script. The AI is a world class professional chef that specializes in creating cuisines inspired by hit TV shows. This AI assistant chef specializes in combining central american and asian flavors.
+
 ## Prerequisites
 
 - Python 3.7+
