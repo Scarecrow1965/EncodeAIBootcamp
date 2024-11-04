@@ -81,6 +81,7 @@ npm install @vercel/analytics
   - Using your editor, download the 'page.tsx' in GitHub and replace 'page.tsx' located in the '{ai-joke-app}/app' folder with it.
   - Using your editor, navigate to 'app' folder and create another folder callled 'api', then navigate to the 'api' folder and create three more folders: 'chat', 'evaluate', and 'generate'.
   - Download each ____-route.ts file and when saving them, ensure you navigate to the ____ folder and saved them as route.ts into each respective folder.
+  - for Scarcrow1965's version, replace global.css to view the web page area for testing purposes only
 
 9. You now have the base app installed into your computer. If you want to change the look, feel, and the system propmts or rules, you may do so through the 'page.tsx' file.
     
