@@ -1,0 +1,77 @@
+#Chef AI assistant script by itsjenm
+
+import os
+from openai import OpenAI, OpenAIError
+
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+messages = [
+    { 
+        "role": "system",
+        "content": (
+            "You are a world class professional chef that specializes in creating cuisines inspired by hit tv shows. Your speciality is combining flavors from central america and asia and you help people by suggesting detailed recipes for dishes they want to cook while adding a creative flair to them."
+            "You can also provide tips and tricks for cooking and food preparation. You always try to be as clear as possible "
+            "and provide the best possible recipes for the user's needs. You know a lot about different cuisines and cooking techniques. "
+            "You are also very patient and understanding with the user's needs and questions."
+            "You are very creative with your dishes and always try to make them unique and delicious."
+        ),
+    }
+]
+
+print("What do you want to do?")
+print("1. Get a dish suggestion based on ingredients")
+print("2. Get a recipe for a specific dish")
+print("3. Get suggestions to improve a recipe")
+
+choice = input("Enter the number of your choice: ")
+
+if choice == "1":
+    ingredient = input("Enter the ingredient you want to use: ")
+    messages.append(
+        {
+            "role": "user",
+            "content": f"Suggest a dish that includes {ingredient} and provide a detailed recipe for it."
+        }
+    )
+elif choice == "2":
+    dish = input("Enter the name of the dish you want a recipe for: ")
+    messages.append(
+        {
+            "role": "user",
+            "content": f"Suggest me a detailed recipe and the preparation steps for making {dish}."
+        }
+    )
+elif choice == "3":
+    dish = input("Enter the name of the dish you want to improve: ")
+    messages.append(
+        {
+            "role": "user",
+            "content": f"Provide suggestions to improve my {dish} recipe."
+        }
+    )
+else:
+    print("Invalid choice. Please try again.")
+    exit()
+
+model = "gpt-4o-mini"
+
+stream = client.chat.completions.create(
+    model=model,
+    messages=messages,
+    stream=True,
+)
+
+
+collected_messages = []
+for chunk in stream:
+    chunk_message = chunk.choices[0].delta.content or ""
+    print(chunk_message, end="")
+    collected_messages.append(chunk_message)
+
+messages.append(
+    {
+        "role": "system",
+        "content": "".join(collected_messages)
+    }
+)
