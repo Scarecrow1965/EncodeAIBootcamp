@@ -79,9 +79,11 @@ npm install @vercel/analytics
 
 8. Download each file that is tied to this GihHub folder and transfer them to the respective locations, using a file explorer and viewed into your editor. Here's how you do it:
   - Using your editor, download the 'page.tsx' in GitHub and replace 'page.tsx' located in the '{ai-joke-app}/app' folder with it.
+    - If you want to use MLittle's version of the program, comment out the curren and uncomment MLittle's code.
   - Using your editor, navigate to 'app' folder and create another folder callled 'api', then navigate to the 'api' folder and create three more folders: 'chat', 'evaluate', and 'generate'.
+    - If you want ot use MLittle's code, comment out the current version and uncomment MLittle's code.
   - Download each ____-route.ts file and when saving them, ensure you navigate to the ____ folder and saved them as route.ts into each respective folder.
-  - for Scarcrow1965's version, replace global.css to view the web page area for testing purposes only
+  - for Scarecrow1965's version, replace global.css to view the web page area for testing purposes only
 
 9. You now have the base app installed into your computer. If you want to change the look, feel, and the system propmts or rules, you may do so through the 'page.tsx' file.
     
