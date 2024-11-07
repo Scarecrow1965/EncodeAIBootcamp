@@ -72,10 +72,15 @@ npm install ai @ai-sdk/openai
   - Using your editor, download the 'route.ts' file in GitHub and ensure you navigate to the chat folder and save it there.
 
 9. You now have the base app installed into your computer. MORE TO FOLLOW
+
+10. Run the Text Generation WebUI application with the API server enabled.
+11. Make sure that the API server is accepting requests on the port you configured
+  -  Check also if you have loaded a model in the Text Generation WebUI application
     
-10. Once you are satified with it, start the development server:
+
+- Commented out for now:
+13. Once you are satified with it, start the development server:
    ```bash
    npm run dev
    ```
-
-11. Open your browser and navigate to `http://localhost:3000` to see your NextJS project running
+14. Open your browser and navigate to `http://localhost:3000` to see your NextJS project running
