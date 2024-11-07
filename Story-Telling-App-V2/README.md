@@ -32,7 +32,7 @@ To consolidate this week's knowledge, students should complete the following pro
 
 3. Create a new NextJS project using the following command:
    ```bash
-   npx create-next-app@latest ai-joke-app
+   npx create-next-app@latest story-telling-app
    ```
    - You can give any name to your project by replacing `story-telling-app` with your preferred name
    - Pick all the default options when prompted
