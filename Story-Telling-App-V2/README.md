@@ -1,13 +1,14 @@
 # Weekend Project
 To consolidate this week's knowledge, students should complete the following project:
 1.  Create a GitHub repository for your project.
-  -Done
+  -  Done
 2.  Add all group members as collaborators.
-  -Done
+  -  Done
 3.  Create a README.md file with your project description.
-  -Done
+  -  Done
 4.  Use the story-telling-app as a base repository or create a new application from scratch using NextJS.
-  -Directions located below to create a new app with base files.
+  -  Directions located below to create a new app with base files.
+  -  Done
 5.  Implement a table of characters that users can create for the story:
   -  Users should be able to add, edit, and delete characters; and
   -  Each new character should have a name, description, and personality.
@@ -48,7 +49,7 @@ To consolidate this week's knowledge, students should complete the following pro
    cd story-telling-app
    ```
 
-5. Due to the warnings listed when you installed '{ai-joke-app}', we will correct these by:
+5. Due to the warnings listed when you installed '{story-telling-app}', we will correct these by:
   ```bash
   npm update eslint
   npm update rimraf
@@ -58,6 +59,7 @@ To consolidate this week's knowledge, students should complete the following pro
 6. Add another important dependency library:
 ```bash
 npm install ai @ai-sdk/openai
+npm install ai openai
 ```
 
 7. **** NOTE: Configure OPEN API KEY to a local envirnoment variable if you have not already done so. ****
