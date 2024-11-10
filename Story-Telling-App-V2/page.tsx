@@ -1,6 +1,6 @@
 // Original source:
 // import Image from "next/image";
-
+// 
 // export default function Home() {
 //   return (
 //     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -23,7 +23,7 @@
 //           </li>
 //           <li>Save and see your changes instantly.</li>
 //         </ol>
-
+// 
 //         <div className="flex gap-4 items-center flex-col sm:flex-row">
 //           <a
 //             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
@@ -102,6 +102,129 @@
 // }
 
 // from Lesson 8, 04-Story-Telling.md
+// "use client";
+// 
+// import { useState } from "react";
+// import { useChat } from "ai/react";
+// 
+// export default function Chat() {
+//   const { messages, append, isLoading } = useChat();
+//   const genres = [
+//     { emoji: "🧙", value: "Fantasy" },
+//     { emoji: "🕵️", value: "Mystery" },
+//     { emoji: "💑", value: "Romance" },
+//     { emoji: "🚀", value: "Sci-Fi" },
+//   ];
+//   const tones = [
+//     { emoji: "😊", value: "Happy" },
+//     { emoji: "😢", value: "Sad" },
+//     { emoji: "😏", value: "Sarcastic" },
+//     { emoji: "😂", value: "Funny" },
+//   ];
+// 
+//   const [state, setState] = useState({
+//     genre: "",
+//     tone: "",
+//   });
+// 
+//   const handleChange = ({
+//     target: { name, value },
+//   }: React.ChangeEvent<HTMLInputElement>) => {
+//     setState({
+//       ...state,
+//       [name]: value,
+//     });
+//   };
+// 
+//   return (
+//     <main className="mx-auto w-full p-24 flex flex-col">
+//       <div className="p4 m-4">
+//         <div className="flex flex-col items-center justify-center space-y-8 text-white">
+//           <div className="space-y-2">
+//             <h2 className="text-3xl font-bold">Story Telling App</h2>
+//             <p className="text-zinc-500 dark:text-zinc-400">
+//               Customize the story by selecting the genre and tone.
+//             </p>
+//           </div>
+// 
+//           <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
+//             <h3 className="text-xl font-semibold">Genre</h3>
+// 
+//             <div className="flex flex-wrap justify-center">
+//               {genres.map(({ value, emoji }) => (
+//                 <div
+//                   key={value}
+//                   className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg"
+//                 >
+//                   <input
+//                     id={value}
+//                     type="radio"
+//                     value={value}
+//                     name="genre"
+//                     onChange={handleChange}
+//                   />
+//                   <label className="ml-2" htmlFor={value}>
+//                     {`${emoji} ${value}`}
+//                   </label>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+// 
+//           <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
+//             <h3 className="text-xl font-semibold">Tones</h3>
+// 
+//             <div className="flex flex-wrap justify-center">
+//               {tones.map(({ value, emoji }) => (
+//                 <div
+//                   key={value}
+//                   className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg"
+//                 >
+//                   <input
+//                     id={value}
+//                     type="radio"
+//                     name="tone"
+//                     value={value}
+//                     onChange={handleChange}
+//                   />
+//                   <label className="ml-2" htmlFor={value}>
+//                     {`${emoji} ${value}`}
+//                   </label>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+// 
+//           <button
+//             type = "button"
+//             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+//             disabled={isLoading || !state.genre || !state.tone}
+//             onClick={() =>
+//               append({
+//                 role: "user",
+//                 content: `Generate a ${state.genre} story in a ${state.tone} tone`,
+//               })
+//             }
+//           >
+//             Generate Story
+//           </button>
+// 
+//           <div
+//             hidden={
+//               messages.length === 0 ||
+//               messages[messages.length - 1]?.content.startsWith("Generate")
+//             }
+//             className="bg-opacity-25 bg-gray-700 rounded-lg p-4"
+//           >
+//             {messages[messages.length - 1]?.content}
+//           </div>
+//         </div>
+//       </div>
+//     </main>
+//   );
+// }
+
+// new code
 "use client";
 
 import { useState } from "react";
@@ -109,53 +232,103 @@ import { useChat } from "ai/react";
 
 export default function Chat() {
   const { messages, append, isLoading } = useChat();
+
   const genres = [
-    { emoji: "🧙", value: "Fantasy" },
-    { emoji: "🕵️", value: "Mystery" },
-    { emoji: "💑", value: "Romance" },
-    { emoji: "🚀", value: "Sci-Fi" },
+    { value: "Fantasy" },
+    { value: "Mystery" },
+    { value: "Romance" },
+    { value: "Sci-Fi" },
   ];
+
   const tones = [
-    { emoji: "😊", value: "Happy" },
-    { emoji: "😢", value: "Sad" },
-    { emoji: "😏", value: "Sarcastic" },
-    { emoji: "😂", value: "Funny" },
+    { value: "Happy" },
+    { value: "Sad" },
+    { value: "Sarcastic" },
+    { value: "Funny" },
   ];
+
+  type Character = {
+    name: string;
+    description: string;
+    personality: string;
+  };
+
+  // Pre-generated characters array
+  const initialCharacters: Character[] = [
+    { name: "Alice", description: "A brave adventurer", personality: "Bold and curious" },
+    { name: "Bob", description: "A witty detective", personality: "Clever and sharp" },
+    { name: "Charlie", description: "A loyal friend", personality: "Kind and supportive" },
+    { name: "Diana", description: "A mysterious stranger", personality: "Reserved but insightful" },
+  ];
+
+  const [characters, setCharacters] = useState<Character[]>(initialCharacters);
+  const [newCharacter, setNewCharacter] = useState<Character>({ name: "", description: "", personality: "" });
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   const [state, setState] = useState({
     genre: "",
     tone: "",
   });
 
-  const handleChange = ({
-    target: { name, value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle changes in genre and tone selection
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setState({
       ...state,
       [name]: value,
     });
   };
 
+  const handleAddCharacter = () => {
+    if (editingIndex !== null) {
+      // Update existing character
+      const updatedCharacters = [...characters];
+      updatedCharacters[editingIndex] = newCharacter;
+      setCharacters(updatedCharacters);
+      setEditingIndex(null);
+    } else {
+      // Add new character
+      setCharacters([...characters, newCharacter]);
+    }
+    setNewCharacter({ name: "", description: "", personality: "" });
+  };
+
+  // Edit a character by index
+  const handleEditCharacter = (index: number) => {
+    setEditingIndex(index);
+    setNewCharacter(characters[index]);
+  };
+
+  // Delete a character by index
+  const handleDeleteCharacter = (index: number) => {
+    setCharacters(characters.filter((_, i) => i !== index));
+  };
+
+  // Generate the story prompt using selected genre, tone, and characters
+  const generateStoryPrompt = () => {
+    const characterDescriptions = characters
+      .map(char => `${char.name} - ${char.description}, ${char.personality}`)
+      .join("; ");
+    return `Generate a ${state.genre} story in a ${state.tone} tone, using the following characters: ${characterDescriptions}`;
+  };
+
   return (
-    <main className="mx-auto w-full p-24 flex flex-col">
+    <main className="mx-auto w-full p-24 flex flex-col response-box2">
       <div className="p4 m-4">
         <div className="flex flex-col items-center justify-center space-y-8 text-white">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold">Story Telling App</h2>
             <p className="text-zinc-500 dark:text-zinc-400">
-              Customize the story by selecting the genre and tone.
+              Customize the story by selecting the genre, tone, and characters.
             </p>
           </div>
 
+          {/* Genre Selection */}
           <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
             <h3 className="text-xl font-semibold">Genre</h3>
-
             <div className="flex flex-wrap justify-center">
-              {genres.map(({ value, emoji }) => (
-                <div
-                  key={value}
-                  className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg"
-                >
+              {genres.map(({ value }) => (
+                <div key={value} className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg">
                   <input
                     id={value}
                     type="radio"
@@ -164,22 +337,19 @@ export default function Chat() {
                     onChange={handleChange}
                   />
                   <label className="ml-2" htmlFor={value}>
-                    {`${emoji} ${value}`}
+                    {value}
                   </label>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Tone Selection */}
           <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
             <h3 className="text-xl font-semibold">Tones</h3>
-
             <div className="flex flex-wrap justify-center">
-              {tones.map(({ value, emoji }) => (
-                <div
-                  key={value}
-                  className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg"
-                >
+              {tones.map(({ value }) => (
+                <div key={value} className="p-4 m-2 bg-opacity-25 bg-gray-600 rounded-lg">
                   <input
                     id={value}
                     type="radio"
@@ -188,32 +358,87 @@ export default function Chat() {
                     onChange={handleChange}
                   />
                   <label className="ml-2" htmlFor={value}>
-                    {`${emoji} ${value}`}
+                    {value}
                   </label>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Character Management */}
+          <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
+            <h3 className="text-xl font-semibold">Characters</h3>
+            <table className="table-auto w-full text-white">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Personality</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {characters.map((char, index) => (
+                  <tr key={index}>
+                    <td>{char.name}</td>
+                    <td>{char.description}</td>
+                    <td>{char.personality}</td>
+                    <td>
+                      <button onClick={() => handleEditCharacter(index)}>Edit</button>
+                      <button onClick={() => handleDeleteCharacter(index)}>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="mt-4">
+              <input
+                type="text"
+                placeholder="Name"
+                value={newCharacter.name}
+                onChange={e => setNewCharacter({ ...newCharacter, name: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Description"
+                value={newCharacter.description}
+                onChange={e => setNewCharacter({ ...newCharacter, description: e.target.value })}
+              />
+              <input
+                type="text"
+                placeholder="Personality"
+                value={newCharacter.personality}
+                onChange={e => setNewCharacter({ ...newCharacter, personality: e.target.value })}
+              />
+              <button onClick={handleAddCharacter}>
+                {editingIndex !== null ? "Save" : "Add"} Character
+              </button>
+            </div>
+          </div>
+
+          {/* Generate Story Button */}
           <button
+            type="button"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
-            disabled={isLoading || !state.genre || !state.tone}
+            disabled={isLoading || !state.genre || !state.tone || !characters.length}
             onClick={() =>
               append({
                 role: "user",
-                content: `Generate a ${state.genre} story in a ${state.tone} tone`,
+                content: generateStoryPrompt(),
               })
             }
           >
             Generate Story
           </button>
 
+          {/* Display Story */}
           <div
             hidden={
               messages.length === 0 ||
               messages[messages.length - 1]?.content.startsWith("Generate")
             }
-            className="bg-opacity-25 bg-gray-700 rounded-lg p-4"
+            className="bg-opacity-25 bg-gray-700 rounded-lg p-4 response-box1"
           >
             {messages[messages.length - 1]?.content}
           </div>
