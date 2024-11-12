@@ -30,6 +30,8 @@
       </ul>
      </li>
     <li><a href="technical-features">Technical Features</a></li>
+    <li><a href="usage">Usage</a></li>
+    <li><a href="error-handling">Error Handling</a></li>
     <li><a href="#contributors">Contributors</a></li>
   </ol>
 </details>
@@ -176,6 +178,7 @@ npm install ai openai
 -  Mystery
 -  Romance
 -  Sci-Fi
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- VARIOUS TONE SELECTIONS -->
@@ -205,6 +208,38 @@ npm install ai openai
 -  Responsive design
 -  Dark mode UI
 -  Error handling and loading states
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Usage
+
+1.  Add Characters
+-  Click the "Add Character" button
+-  Fill in the character's name, description, and personality
+-  Click "Add" to save the character
+
+2.  Edit/Delete Characters
+-  Use the edit (pencil) icon to modify existing characters
+-  Use the trash icon to remove characters
+
+3.  Select Story Parameters
+-  Choose a genre from the available options
+-  Select a tone for the story
+
+4.  Generate Story
+-  Click the "Generate Story" button
+-  Wait for the story to be generated
+-  Review the generated story and character summaries
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+##  Error Handling
+
+The application includes comprehensive error handling for:
+-  Story generation failures
+-  Invalid character data
+-  Network issues
+-  Stream processing errors
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
