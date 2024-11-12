@@ -214,22 +214,22 @@ npm install ai openai
 ## Usage
 
 1.  Add Characters
--  Click the "Add Character" button
--  Fill in the character's name, description, and personality
--  Click "Add" to save the character
+  -  Click the "Add Character" button
+  -  Fill in the character's name, description, and personality
+  -  Click "Add" to save the character
 
 2.  Edit/Delete Characters
--  Use the edit (pencil) icon to modify existing characters
--  Use the trash icon to remove characters
+  -  Use the edit (pencil) icon to modify existing characters
+  -  Use the trash icon to remove characters
 
 3.  Select Story Parameters
--  Choose a genre from the available options
--  Select a tone for the story
+  -  Choose a genre from the available options
+  -  Select a tone for the story
 
 4.  Generate Story
--  Click the "Generate Story" button
--  Wait for the story to be generated
--  Review the generated story and character summaries
+  -  Click the "Generate Story" button
+  -  Wait for the story to be generated
+  -  Review the generated story and character summaries
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
