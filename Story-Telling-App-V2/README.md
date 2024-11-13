@@ -249,6 +249,7 @@ The application includes comprehensive error handling for:
 The following members contributed to this project:
 -  MLittle
 -  Scarecorw1965
+-  itsjenm
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
