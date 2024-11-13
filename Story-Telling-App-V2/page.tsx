@@ -288,6 +288,11 @@
 //   if (!isClient) return null; // Prevents rendering on the server
 // 
 //   const handleAddCharacter = () => {
+//     // Validate that all fields are filled out
+//     if (!newCharacter.name.trim() || !newCharacter.description.trim() || !newCharacter.personality.trim()) {
+//       alert("Please fill out all character fields before adding.");
+//       return; // Exit without adding if validation fails
+//     }
 //     if (editingIndex !== null) {
 //       // Update existing character
 //       const updatedCharacters = [...characters];
@@ -298,6 +303,7 @@
 //       // Add new character
 //       setCharacters([...characters, newCharacter]);
 //     }
+//     // Clear the input fields
 //     setNewCharacter({ name: "", description: "", personality: "" });
 //   };
 // 
@@ -378,24 +384,34 @@
 //           {/* Character Management */}
 //           <div className="space-y-4 bg-opacity-25 bg-gray-700 rounded-lg p-4">
 //             <h3 className="text-xl font-semibold">Characters</h3>
-//             <table className="table-auto w-full text-white">
+//             <table className="table-auto w-full text-white border-collapse border border-gray-500">
 //               <thead>
-//                 <tr>
-//                   <th>Name</th>
-//                   <th>Description</th>
-//                   <th>Personality</th>
-//                   <th>Actions</th>
+//                 <tr className="bg-gray-800">
+//                   <th className="border border-gray-600 p-2 text-center">Name</th>
+//                   <th className="border border-gray-600 p-2 text-center">Description</th>
+//                   <th className="border border-gray-600 p-2 text-center">Personality</th>
+//                   <th className="border border-gray-600 p-2 text-center">Actions</th>
 //                 </tr>
 //               </thead>
 //               <tbody>
 //                 {characters.map((char, index) => (
-//                   <tr key={index}>
-//                     <td>{char.name}</td>
-//                     <td>{char.description}</td>
-//                     <td>{char.personality}</td>
+//                   <tr key={index} className="text-center">
+//                     <td className="border border-gray-600 p-2">{char.name}</td>
+//                     <td className="border border-gray-600 p-2">{char.description}</td>
+//                     <td className="border border-gray-600 p-2">{char.personality}</td>
 //                     <td>
-//                       <button onClick={() => handleEditCharacter(index)}>Edit</button>
-//                       <button onClick={() => handleDeleteCharacter(index)}>Delete</button>
+//                       <button
+//                         type="button"
+//                         className="mr-2 text-blue-400"
+//                         onClick={() => handleEditCharacter(index)}>
+//                         Edit
+//                       </button>
+//                       <button
+//                         type="button"
+//                         className="mr-2 text-blue-400"
+//                         onClick={() => handleDeleteCharacter(index)}>
+//                         Delete
+//                       </button>
 //                     </td>
 //                   </tr>
 //                 ))}
@@ -442,64 +458,7 @@
 //             Generate Story
 //           </button>
 // 
-//           {/* Display Story */}
-//           {/* <div
-//             hidden={
-//               messages.length === 0 ||
-//               messages[messages.length - 1]?.content.startsWith("Generate")
-//             }
-//             className="bg-opacity-25 bg-gray-700 rounded-lg p-4 response-box1"
-//           >
-//             {messages[messages.length - 1]?.content || "Generating story..."}
-//           </div> */}
-// 
 //           {/* Display Story and Character Summaries */}
-//           {/* <div className="bg-opacity-25 bg-gray-700 rounded-lg p-4 response-box-output"> */}
-//             {/* {(() => { */}
-//               {/* // Get the latest message content, assuming it's the generated response */}
-//               {/* const responseText = messages[messages.length - 1]?.content || ""; */}
-// 
-//               {/* // Check if response includes the delimiter */}
-//               {/* console.log("Full Response Text:", responseText); // Logs the full response */}
-// 
-//               {/* // Split the response into story and summaries */}
-//               {/* const [storyText, summaries] = responseText.includes("### Summaries ###") */}
-//                 {/* ? responseText.split("### Summaries ###") */}
-//                 {/* : [responseText, ""]; // If no delimiter, display everything as the story */}
-// 
-//               {/* return ( */}
-//               {/* <> */}
-//               {/* Display the main story */}
-//               {/* <div className="story-content mb-4"> */}
-//                 {/* <h3 className="text-xl font-semibold text-yellow-400">Story</h3> */}
-//                 {/* <p className="mt-2 whitespace-pre-line"> */}
-//                   {/* {storyText.trim() || "No story generated."} */}
-//                 {/* </p> */}
-//               {/* </div> */}
-//
-//               {/* Display each character's summary if summaries exist */}
-//               {/* {summaries ? ( */}
-//                 {/* <div className="character-summaries mt-4"> */}
-//                   {/* <h3 className="text-xl font-semibold text-yellow-400">Character Summaries</h3> */}
-//                   {/* {summaries */}
-//                       {/* .split("\n") */}
-//                       {/* .filter(Boolean) // Remove empty lines */}
-//                       {/* .map((summary, index) => ( */}
-//                         {/* <p key={index} className="character-summary mt-1"> */}
-//                           {/* {summary} */}
-//                         {/* </p> */}
-//                       {/* ))} */}
-//                     {/* </div> */}
-//                   {/* ) : ( */}
-//                     {/* <p>No character summaries generated.</p> */}
-//                   {/* )} */}
-//                 {/* </> */}
-//               {/* ); */}
-//             {/* })()} */}
-//           {/* </div> */}
-// 
-//           {/* Display Story and Character Summaries - version 2 */}
-// 
 //           {(() => {
 //             // Get the latest message content, assuming it's the generated response
 //             const responseText = messages[messages.length - 1]?.content || "";
@@ -1024,7 +983,7 @@ export default function Chat() {
       [name]: value,
     });
   };
-  
+
   const handleCharacterChange = ({
     target: { name, value },
   }: React.ChangeEvent<HTMLInputElement>) => {
@@ -1039,7 +998,7 @@ export default function Chat() {
     setNewCharacter({ name: "", description: "", personality: "" });
   };
 
-  const editCharacter = (index: number, updatedCharacter: any) => {
+  const editCharacter = (index: number, updatedCharacter: { name: string; description: string; personality: string }) => {
     const updatedCharacters = characters.map((character, i) =>
       i === index ? updatedCharacter : character
     );
@@ -1065,7 +1024,7 @@ export default function Chat() {
           <div className="space-y-4 bg-opacity-25 items-center bg-gray-700 rounded-lg p-4">
             <h3 className="text-xl font-semibold">Create a character</h3>
 
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-4 colourFont">
               <input
                 type="text"
                 name="name"
@@ -1089,6 +1048,8 @@ export default function Chat() {
               />
             </div>
             <button
+              type="button"
+              title="Add Character"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded centered"
               onClick={addCharacter}>
               Add Character
@@ -1106,7 +1067,7 @@ export default function Chat() {
                   <th>Actions</th>
                 </tr>
               </thead>
-            
+
             <tbody>
               {characters.map((character, index) => (
                 <tr key={index}>
