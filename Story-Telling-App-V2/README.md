@@ -1,6 +1,6 @@
 <a id="readme-top"></a>
 <!-- TITLE -->
-<h2 align="center">Story Telling App</h2>
+<h1 align="center">Story Telling App</h1>
 <p align="center">A dynamic web application that generates creative stories based on custom characters, genres, and tones. Built with React and Next.js, this app provides an interactive interface for creating and managing characters while generating unique stories through an AI-powered backend.</p>
 
 <!-- TABLE OF CONTENTS -->
@@ -91,7 +91,7 @@ Please follow the instructions.
 ###  Installation
 - Due to the size limitations within GitHub, it is not possible to install the AI Joke Generator App into this space.
 - As such here are the instructions on how to install said application:
-1.  Open a command prompt window (for windows users) or a ______ (for Apple/Linux Users)
+1. Open a command prompt window (for windows users) or a bash (for Apple/Linux Users)
 2. Create a new folder for your projects:
    ```bash
    mkdir my-projects
@@ -117,17 +117,22 @@ Please follow the instructions.
    cd story-telling-app
    ```
 
-5. Due to the warnings listed when you installed '{story-telling-app}', we will correct these by updating each dependency:
+5. Due to the warnings listed when you initially install '{story-telling-app}', we will correct these by updating each dependency:
   ```bash
   npm update eslint
   npm update rimraf
   npm update glob
   ```
 
-6. Add other important libraries:
+6. Add other important libraries to install:
 ```bash
 npm install ai @ai-sdk/openai
 npm install ai openai
+```
+
+6a. For MLittle's app to work, there is an additional library to install:
+```bash
+npm install lucide-react
 ```
 
 7. **** NOTE: Configure OPEN API KEY to a local envirnoment variable if you have not already done so. ****
@@ -141,30 +146,30 @@ npm install ai openai
   - Using your editor, navigate to 'app' folder and create another folder callled 'api', then navigate to the 'api' folder and create three more folders: 'chat'.
   - Using your editor, download the 'route.ts' file in GitHub and ensure you navigate to the chat folder and save it there.
 
-9. You now have the base app installed into your computer. MORE TO FOLLOW
+9. You now have the base app installed into your computer. There are two versions within the page.tsx file: Scarecrow1965 and MLittle. MLittle's is the active one and Scarecrow 1965 is the one below it. If you want to use either, please ensure that one is commented out and the other is not.
 
 10. Run the Text Generation WebUI application with the API server enabled.
-11. Make sure that the API server is accepting requests on the port you configured
-  -  Check also if you have loaded a model in the Text Generation WebUI application
-    
+11. Open your browser and navigate to `http://127.0.0.1:7860` to see the WebUI running
+12. Make sure that the API server is accepting requests:
+  -  Check also if you have loaded a model in the Model Tab
+  -  Verify that you have _api_ and _openai_ selected in the Session tab; if not select them and restart the app.
+  -  Open your browser again and navigate to `http://127.0.0.1:5000/docs` to see FastAPI swagger UI
 
-- Commented out for now:
 13. Once you are satified with it, start the development server:
    ```bash
    npm run dev
    ```
-14. Open your browser and navigate to `http://localhost:3000` to see your NextJS project running
+14. Open your browser and navigate to `http://localhost:3000` to see the story-telling-app project running
+15. Test the see if the results work or not!! Enjoy!!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FEATURES -->
 ## Features
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CHARACTER MANAGEMENT -->
 ### Character Management:
-
 -  Create, edit, and delete characters
 -  Define character names, descriptions, and personalities
 -  Visual card-based character display
@@ -183,7 +188,6 @@ npm install ai openai
 
 <!-- VARIOUS TONE SELECTIONS -->
 ### Various Tone Selections:
-
 -  Happy
 -  Sad
 -  Sarcastic
@@ -193,7 +197,6 @@ npm install ai openai
 
 <!-- REAL-TIME GENERATION -->
 ### Real-time Story Generation:
-
 -  Stream-based story delivery
 -  Intelligent text processing and formatting
 -  Character role summaries
@@ -202,7 +205,6 @@ npm install ai openai
 
 <!-- TECHNICAL FEATURES -->
 ##  Technical Features:
-
 -  Server-side streaming response handling
 -  Advanced text processing and cleaning
 -  Responsive design
@@ -212,7 +214,6 @@ npm install ai openai
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Usage
-
 1.  Add Characters
   -  Click the "Add Character" button
   -  Fill in the character's name, description, and personality
@@ -234,7 +235,6 @@ npm install ai openai
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ##  Error Handling
-
 The application includes comprehensive error handling for:
 -  Story generation failures
 -  Invalid character data
@@ -245,7 +245,6 @@ The application includes comprehensive error handling for:
 
 <!-- CONTRIBUTORS -->
 ##  Contributors
-
 The following members contributed to this project:
 -  MLittle
 -  Scarecorw1965
