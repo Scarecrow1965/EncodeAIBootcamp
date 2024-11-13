@@ -145,7 +145,7 @@ npm install lucide-react
   - Using your editor, download the 'page.tsx' file in GitHub and replace 'page.tsx' located in the '{story-telling-app}/app' folder with it.
   - Using your editor, navigate to 'app' folder and create another folder callled 'api', then navigate to the 'api' folder and create three more folders: 'chat'.
   - Using your editor, download the 'route.ts' file in GitHub and ensure you navigate to the chat folder and save it there.
-  - for Scarecrow1965's program, using your editor, download the 'glabal.css' file in GitHubhe (added a little "bling" to the screen), replace it with the original in the '{story-telling-app}/app' folder.
+  - Using your editor, download the 'glabal.css' file in GitHub (added a little "bling" to the screen for Scarecrow1965 and font color to Jenn), replace it with the original in the '{story-telling-app}/app' folder.
 
 9. You now have the base app installed into your computer. There are two versions within the page.tsx file: Scarecrow1965 and MLittle. MLittle's is the active one and Scarecrow 1965 is the one below it. If you want to use either, please ensure that one is commented out and the other is not.
 
