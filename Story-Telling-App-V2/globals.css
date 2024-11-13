@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* These CSS properties are used for testing purposes only */
+.response-box-output {
+  /* Change to your desired background color */
+  /* background-color: grey; */
+  /* Change to your desired border color */
+  border: 2px solid red;
+  padding: 5px;
+  border-radius: 8px;
+  height: 300px; /* Set the desired height */
+  overflow-y: auto; /* Add scroll if content overflows */
+}
+
+.response-box-input {
+  /* Change to your desired background color */
+  /* background-color: green; */
+  /* Change to your desired border color */
+  /* border: 2px solid yellow;  */
+  padding: 5px;
+  border-radius: 8px;
+}
