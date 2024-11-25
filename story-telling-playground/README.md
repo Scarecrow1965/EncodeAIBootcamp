@@ -14,7 +14,7 @@
 
 # Weekend Project result
 
-## Follow the directions in the Story-telling-app installation procedures.
+## Follow the directions in the Story-telling-app folder installation procedures.
 ## Building a RAG Pipeline with LlamaIndex
 1. Clone the LlamaIndex TypeScript Playground
 ``` bash
