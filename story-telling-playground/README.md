@@ -15,3 +15,42 @@
 # Weekend Project result
 
 ## Follow the directions in the Story-telling-app installation procedures.
+## Building a RAG Pipeline with LlamaIndex
+1. Clone the LlamaIndex TypeScript Playground
+``` bash
+git clone https://github.com/run-llama/ts-playground.git
+cd ts-playground
+```
+2. Install the dependencies
+``` bash
+npm install
+```
+3. install openai library
+``` bash
+npm install openai
+npm install openai/sdk
+```
+4. update libraries
+``` bash
+npm update rimraf
+npm update eslint
+npm update glob
+```
+5. Remove the vulnerbilities
+``` bash
+npm audit fix --force
+```
+6. Copy the files listed below (attached to this folder):
+   - in the app folder, replace:
+        - index. tsx
+    - in the api folder, replace:
+        - splitandembed.ts
+        - retrieveandquery.ts
+    - in the main folder, replace:
+        - package.json
+7. Run the project
+``` bash
+npm run dev
+```
+8. Open the application in your browser and test the RAG features
+- Navigate to http://localhost:3000
