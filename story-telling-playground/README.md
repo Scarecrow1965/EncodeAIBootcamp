@@ -27,8 +27,8 @@ npm install
 ```
 3. install openai library
 ``` bash
-npm install openai
-npm install openai/sdk
+npm install ai @ai-sdk/openai
+npm install ai openai
 ```
 4. update libraries
 ``` bash
