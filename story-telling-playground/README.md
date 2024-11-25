@@ -36,7 +36,7 @@ npm update rimraf
 npm update eslint
 npm update glob
 ```
-5. Remove the vulnerbilities
+5. Remove the vulnerabilities. Repeat three times to completely remove all vulnerabilities.
 ``` bash
 npm audit fix --force
 ```
