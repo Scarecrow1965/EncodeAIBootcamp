@@ -14,6 +14,22 @@
 
 # Weekend Project result
 
+# Features
+- Text Document Processing: Upload and process text files
+- Character Extraction: Automatically identifies and extracts character information including:
+    - Character names
+    - Physical descriptions
+    - Personality traits
+- Story Generation: Creates original stories featuring the extracted characters
+- Vector Indexing: Implements efficient text chunking and embedding for large documents
+- Interactive UI: Clean, responsive interface with real-time feedback
+
+## Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- OpenAI API key
+- Next.js 13+
+
 ## Building a RAG Pipeline with LlamaIndex
 1. Clone the LlamaIndex TypeScript Playground
 ``` bash
@@ -53,3 +69,14 @@ npm run dev
 ```
 8. Open the application in your browser and test the RAG features
 - Navigate to http://localhost:3000
+
+9. Click the 'Browse'button, enter your .txt file.
+10. Click the 'Get Character Information' button and wait until you get an answer.
+11. click the 'Reset" button to start all over again.
+12. Enjoy!
+
+## Components
+- index.tsx: Main application interface
+- /api/extractcharacters: Character extraction endpoint
+- /api/splitandembed: Text processing and embedding endpoint
+
