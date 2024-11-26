@@ -14,7 +14,6 @@
 
 # Weekend Project result
 
-## Follow the directions in the Story-telling-app folder installation procedures.
 ## Building a RAG Pipeline with LlamaIndex
 1. Clone the LlamaIndex TypeScript Playground
 ``` bash
@@ -36,7 +35,7 @@ npm update rimraf
 npm update eslint
 npm update glob
 ```
-5. Remove the vulnerabilities. Repeat three times to completely remove all vulnerabilities.
+5. Remove the vulnerabilities. Repeat this step three times or more to completely remove all vulnerabilities.
 ``` bash
 npm audit fix --force
 ```
