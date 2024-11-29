@@ -10,3 +10,4 @@ Enjoy!
 - Second homework was to create an AI Joke generator. Again, the directory is aptly named as such.
 - Third program was to create a story telling app. Again, the dfirectory is apty named as such
 - Fourth program was to merge a ts-playgound with the story-telling-app. So I aptly named the folder story-telling-playground.
+- Fifth program is to create an app that will detect wether the picture is an animal, if it is a dangerous animal, and provide a Wikipedia link to this animal. The folder is called animal-detector.
