@@ -47,7 +47,7 @@ npm install
 ```
 
 ## Step 2: Build the Upload Page
--  Comment out the code within 'pages.tsx'.
+-  Comment out the code within 'page.tsx'.
 -  Add a the information below to it:
 ```
 use client";
