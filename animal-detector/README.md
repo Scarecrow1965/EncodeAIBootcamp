@@ -172,7 +172,7 @@ export default function Home() {
 }
 ```
 ## Step 3: API Route for Classification
--  Create an API route: Create a file 'app/api/route.js'.
+-  Create an API route: Create a file 'app/api/upload/route.js'.
 -  Set up multer for file handling:
 ```
 import path from 'path';// const path = require('path');
@@ -266,7 +266,7 @@ export const config = {
 
 ```
 ## Step 4: Create Classifier and AI Agent
--  Animal Classifier: In 'app/api/classifier.js', use the Hugging Face facebook/bart-large-mnli model for classification:
+-  Animal Classifier: In 'app/api/classifier.js', use the Hugging Face [facebook/bart-large-mnli model](https://huggingface.co/microsoft/LLM2CLIP-Llama-3-8B-Instruct-CC-Finetuned/tree/main) for classification:
 ```
 import { CLIPProcessor, CLIPModel } from '@huggingface/transformers';
 import sharp from 'sharp';
