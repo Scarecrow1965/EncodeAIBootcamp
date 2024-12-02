@@ -50,17 +50,22 @@ npm install
 -  Comment out the code within 'page.tsx'.
 -  Add a the information below to it:
 ```
-use client";
+"use client";
 
 import { useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  
   interface Result {
     name: string;
     isDangerous: boolean;
     description: string;
+    relatedAnimals: string[];
+    image: string; // Base64-encoded image
   }
 
   const [result, setResult] = useState<Result | null>(null);
@@ -68,16 +73,18 @@ export default function Home() {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
+      const file = e.target.files[0];
+      setImage(file); // setImage(e.target.files[0]);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
   const handleSubmit = async () => {
     if (!image) return alert("Please upload an image!");
-  
+
     const formData = new FormData();
     formData.append("file", image);
-  
+
     try {
       setIsLoading(true);
       const { data } = await axios.post("/api/upload", formData);
@@ -121,6 +128,18 @@ export default function Home() {
           onChange={handleImageUpload}
         />
       </div>
+      <h2 className="text-xl font-bold">This is the pic you have submitted:</h2>
+      {imagePreview && (
+        <div className="mb-4">
+          <Image
+            src={imagePreview}
+            alt="Uploaded Preview"
+            width={400}
+            height={400}
+            objectFit="contain"
+          />
+        </div>
+      )}
       <div className="mb-4">
         <button
           onClick={handleSubmit}
@@ -131,11 +150,21 @@ export default function Home() {
         </button>
       </div>
       {result && (
-        <div>
-          <h2 className="text-xl font-bold mb-2">Result</h2>
-          <p>Animal: {result.name}</p>
-          <p>Dangerous: {result.isDangerous ? "Yes" : "No"}</p>
-          <p>Description: {result.description}</p>
+        <div className="mt-4">
+          <h2 className="text-xl font-bold">Results:</h2>
+          <p>Animal found: {result.name ? "Yes" : "No"}</p>
+          {result.name && (
+            <>
+              <p>Common Name: {result.name}</p>
+              <p>Is Dangerous: {result.isDangerous ? "Yes" : "No"}</p>
+              <p>Related Animals:</p>
+              <ul>
+                {result.relatedAnimals.map((animal, index) => (
+                  <li key={index}>{animal}</li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
       )}
     </div>
@@ -146,23 +175,40 @@ export default function Home() {
 -  Create an API route: Create a file 'app/api/route.js'.
 -  Set up multer for file handling:
 ```
-import express from 'express';// const express = require('express');
-import multer from 'multer';// const multer = require('multer');
 import path from 'path';// const path = require('path');
-import fs from 'fs';// const fs = require('fs');
-import identifyAnimal from './classifier';// const classifyImage = require('./classifier');
-import fetchAnimalInfo from './agent';// const fetchAnimalInfo = require('./agent');
-
-const router = express.Router();
+import sharp from 'sharp';
+import identifyAnimal from '../classifier';// const classifyImage = require('./classifier');
+import fetchAnimalInfo from '../agent';// const fetchAnimalInfo = require('./agent');
+import nextConnect from 'next-connect';
+import multer from 'multer';// const multer = require('multer');
 
 // Set up Multer to handle file uploads
 const upload = multer({
-  dest: 'uploads/', // Temporary folder for uploaded files
+  storage: multer.memoryStorage(), // Store files in memory
   limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
+  fileFilter: (req, file, cb) => {
+    // Accept images only
+    if (!file.mimetype.startsWith('image/')) {
+      console.log('req Error:', req);
+      return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+  },
 });
 
-// POST route to handle image upload
-router.post('/upload', upload.single('image'), async (req, res) => {
+const apiRoute = nextConnect({
+  onError(error, req, res) {
+    res.status(501).json({ error: `Sorry something happened! ${error.message}` });
+    console.log('req Error:', req);
+  },
+  onNoMatch(req, res) {
+    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+  },
+});
+
+apiRoute.use(upload.single('image'));
+
+apiRoute.post(async (req, res) => {
   try {
     // Ensure the file is uploaded
     if (!req.file) {
@@ -171,6 +217,15 @@ router.post('/upload', upload.single('image'), async (req, res) => {
 
     // Full path to the uploaded file
     const imagePath = path.resolve(req.file.path);
+
+    // Read the image file and convert it to Base64
+    // const imageBuffer = fs.readFileSync(imagePath);
+    // Process the image using sharp
+    const imageBuffer = await sharp(req.file.buffer)
+      .resize(224, 224)
+      .toFormat('png')
+      .toBuffer();
+    const imageBase64 = imageBuffer.toString('base64');
 
     // Classify the image
     const classificationResult = await identifyAnimal(imagePath); // Using `identifyAnimal`
@@ -187,6 +242,7 @@ router.post('/upload', upload.single('image'), async (req, res) => {
       detectedAnimal: classificationResult.animal,
       caption: classificationResult.caption,
       animalInfo,
+      image: imageBase64, // Include the Base64-encoded image in the response
     });
   } catch (error) {
     console.error('Error in route:', error);
@@ -200,53 +256,61 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
-module.exports = router;
+export default apiRoute;
+
+export const config = {
+  api: {
+    bodyParser: false, // Disallow body parsing, since we're using multer
+  },
+};
+
 ```
 ## Step 4: Create Classifier and AI Agent
 -  Animal Classifier: In 'app/api/classifier.js', use the Hugging Face facebook/bart-large-mnli model for classification:
 ```
-import { pipeline } from '@xenova/transformers';
-import fs from 'fs';
-// const { pipeline } = require('@xenova/transformers');
-// const fs = require('fs');
+import { CLIPProcessor, CLIPModel } from '@huggingface/transformers';
+import sharp from 'sharp';
 
-async function identifyAnimal(imagePath) {
-  try {
-    // Load the image-to-text pipeline for generating captions
-    const imageCaptioning = await pipeline('image-to-text', 'nlpconnect/vit-gpt2-image-captioning');
+async function identifyAnimal(imageBuffer) {
+  const processor = new CLIPProcessor.from_pretrained('openai/clip-vit-base-patch32');
+  const model = new CLIPModel.from_pretrained('openai/clip-vit-base-patch32');
 
-    // Read the image file
-    const image = fs.readFileSync(imagePath);
+  // const imageBuffer = readFileSync(imagePath);
+  // 
+  // Process the image buffer
+  const image = await sharp(imageBuffer)
+    .resize(224, 224)
+    .toFormat('png')
+    .toBuffer();
 
-    // Generate a caption for the image
-    const captionResult = await imageCaptioning(image);
+  const inputs = processor(images=image, return_tensors="pt");
+  // const outputs = await model(inputs);
+  // const logits_per_image = outputs.logits_per_image;  // this is the image-text similarity score
+  // const probs = logits_per_image.softmax(dim=1);  // we can take the softmax to get the label probabilities
 
-    const caption = captionResult[0]?.generated_text || 'No caption generated';
-    console.log(`Generated Caption: ${caption}`);
+  // Generate a caption for the image
+  const captionResult = await model.generate_caption(inputs);
+  const caption = captionResult[0]?.generated_text || 'No caption generated';
+  console.log(`Generated Caption: ${caption}`);
 
-    // Extract the most probable animal from the caption using regex
-    const animalMatch = caption.match(/\b(dog|cat|lion|tiger|elephant|rabbit|eagle|horse|snake|crocodile|giraffe|bear|fox|squirrel|zebra|wolf|penguin|shark|whale|kangaroo|dolphin)\b/i);
+  // Extract the most probable animal from the caption using regex
+  const animalMatch = caption.match(/\b(dog|cat|lion|tiger|elephant|rabbit|eagle|horse|snake|crocodile|giraffe|bear|fox|squirrel|zebra|wolf|penguin|shark|whale|kangaroo|dolphin)\b/i);
 
-    if (animalMatch) {
-      const detectedAnimal = animalMatch[0].toLowerCase();
-      return {
-        animal: detectedAnimal,
-        caption: caption,
-      };
-    } else {
-      return {
-        animal: 'unknown',
-        caption: caption,
-      };
-    }
-  } catch (error) {
-    console.error('Error identifying animal:', error);
-    throw error;
+  if (animalMatch) {
+    const detectedAnimal = animalMatch[0].toLowerCase();
+    return {
+      animal: detectedAnimal,
+      caption: caption,
+    };
+  } else {
+    return {
+      animal: 'unknown',
+      caption: caption,
+    };
   }
 }
 
-module.exports = identifyAnimal;
-
+export default identifyAnimal;
 ```
 -  AI Agent: In 'app/api/agent.js', integrate LlamaIndex and use Axios to query Wikipedia and analyze the animal:
 ```
@@ -255,8 +319,13 @@ import axios from 'axios';
 
 async function fetchAnimalInfo(animalName) {
   if (animalName === 'unknown') {
-    return { title: 'Unknown Animal', description: 'No additional information available.', dangerous: false };
-  }
+    return {
+      title: 'Unknown Animal',
+      description: 'No additional information available.',
+      dangerous: false ,
+      relatedAnimals: [],
+  };
+}
 
   try {
     const response = await axios.get('https://en.wikipedia.org/w/api.php', {
@@ -264,9 +333,10 @@ async function fetchAnimalInfo(animalName) {
         action: 'query',
         format: 'json',
         titles: animalName,
-        prop: 'extracts',
+        prop: 'extracts|links',
         exintro: true,
         explaintext: true,
+        pllimit: 10, // Limit to 10 releated links
       },
     });
 
@@ -277,13 +347,24 @@ async function fetchAnimalInfo(animalName) {
       const description = page.extract.toLowerCase();
       const isDangerous = /dangerous|venomous|aggressive|deadly|carnivore/.test(description);
 
+      // Extract related animals from links
+      const relatedAnimals = page.links
+        ? page.links.map(link => link.title).slice(0, 10)
+        : [];
+      
       return {
         title: page.title,
         description: page.extract,
         dangerous: isDangerous,
+        relatedAnimals,
       };
     } else {
-      return { title: animalName, description: 'No information found.', dangerous: false };
+      return {
+        title: animalName,
+        description: 'No information found.',
+        dangerous: false,
+      relatedAnimals: [],
+      };
     }
   } catch (error) {
     console.error('Error fetching Wikipedia info:', error);
