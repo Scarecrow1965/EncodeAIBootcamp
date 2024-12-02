@@ -47,7 +47,7 @@ npm install
 ```
 
 ## Step 2: Build the Upload Page
--  Comment out the code within 'page.tsx'.
+-  Comment out the code within 'page.tsx'. Or replace it with the copy within this directory.
 -  Add a the information below to it:
 ```
 "use client";
@@ -172,8 +172,7 @@ export default function Home() {
 }
 ```
 ## Step 3: API Route for Classification
--  Create an API route: Create a file 'app/api/upload/route.js'.
--  Set up multer for file handling:
+-  Create an API route: Create a file 'app/api/upload/route.js'. Or replace it with the copy within this directory.
 ```
 import path from 'path';// const path = require('path');
 import sharp from 'sharp';
@@ -266,7 +265,7 @@ export const config = {
 
 ```
 ## Step 4: Create Classifier and AI Agent
--  Animal Classifier: In 'app/api/classifier.js', use the Hugging Face [facebook/bart-large-mnli model](https://huggingface.co/microsoft/LLM2CLIP-Llama-3-8B-Instruct-CC-Finetuned/tree/main) for classification:
+-  Animal Classifier: In 'app/api/classifier.js', use the Hugging Face [facebook/bart-large-mnli model](https://huggingface.co/microsoft/LLM2CLIP-Llama-3-8B-Instruct-CC-Finetuned/tree/main) for classification. Or replace it with the copy within this directory.:
 ```
 import { CLIPProcessor, CLIPModel } from '@huggingface/transformers';
 import sharp from 'sharp';
@@ -312,7 +311,7 @@ async function identifyAnimal(imageBuffer) {
 
 export default identifyAnimal;
 ```
--  AI Agent: In 'app/api/agent.js', integrate LlamaIndex and use Axios to query Wikipedia and analyze the animal:
+-  AI Agent: In 'app/api/agent.js', integrate LlamaIndex and use Axios to query Wikipedia and analyze the animal. Or replace it with the copy within this directory.:
 ```
 import axios from 'axios';
 // const axios = require('axios');
