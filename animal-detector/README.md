@@ -27,15 +27,13 @@ npm install next-connect multer
 ``` bash
 npm install ai @ai-sdk/openai openai llamaindex
 ```
--  Install a computer vision library or API client (e.g., @tensorflow/tfjs for TensorFlow.js or an API client for a service like Google Vision or AWS Rekognition).
 -  Install Axios for HTTP requests:
 ``` bash
 npm install axios
 ```
--  Install the Hugging Face transformers library, so we can use the facebook/:
+-  Install the Hugging Face transformers library, so we can use the proper transformers for CLIP implementation:
 ``` bash
-npm install @huggingface/inference
-npm install @huggingface/transformers
+npm install @huggingface/inference @huggingface/transformers
 ```
 -  ensure all packages are up-to-date in side the package.json file:
 ``` bash
@@ -174,12 +172,11 @@ export default function Home() {
 ## Step 3: API Route for Classification
 -  Create an API route: Create a file 'app/api/upload/route.js'. Or replace it with the copy within this directory.
 ```
-import path from 'path';// const path = require('path');
 import sharp from 'sharp';
-import identifyAnimal from '../classifier';// const classifyImage = require('./classifier');
-import fetchAnimalInfo from '../agent';// const fetchAnimalInfo = require('./agent');
+import identifyAnimal from '../classifier';
+import fetchAnimalInfo from '../agent';
 import nextConnect from 'next-connect';
-import multer from 'multer';// const multer = require('multer');
+import multer from 'multer';
 
 // Set up Multer to handle file uploads
 const upload = multer({
@@ -214,26 +211,27 @@ apiRoute.post(async (req, res) => {
       return res.status(400).json({ error: 'No image file uploaded' });
     }
 
-    // Full path to the uploaded file
-    const imagePath = path.resolve(req.file.path);
-
-    // Read the image file and convert it to Base64
-    // const imageBuffer = fs.readFileSync(imagePath);
     // Process the image using sharp
     const imageBuffer = await sharp(req.file.buffer)
-      .resize(224, 224)
+      .resize(336, 336, {
+        fit: sharp.fit.cover,
+        position: sharp.strategy.entropy
+      })
       .toFormat('png')
       .toBuffer();
+    
+    // Convert the image to Base64
     const imageBase64 = imageBuffer.toString('base64');
 
+    // Process the image
+    // const inputs = processor(images=imageBuffer, return_tensors="pt").pixel_values.to('cuda');
+    // const outputs = await model.get_image_features(inputs);
+
     // Classify the image
-    const classificationResult = await identifyAnimal(imagePath); // Using `identifyAnimal`
+    const classificationResult = await identifyAnimal(imageBuffer); // Using `identifyAnimal` from classifier.js 
 
     // Fetch additional info about the detected animal
-    const animalInfo = await fetchAnimalInfo(classificationResult.animal); // Using `fetchAnimalInfo`
-
-    // Clean up the uploaded file
-    fs.unlinkSync(imagePath);
+    const animalInfo = await fetchAnimalInfo(classificationResult.animal); // Using `fetchAnimalInfo` from agent.js
 
     // Respond to the client
     res.json({
@@ -262,7 +260,6 @@ export const config = {
     bodyParser: false, // Disallow body parsing, since we're using multer
   },
 };
-
 ```
 ## Step 4: Create Classifier and AI Agent
 -  Animal Classifier: In 'app/api/classifier.js', use the Hugging Face [facebook/bart-large-mnli model](https://huggingface.co/microsoft/LLM2CLIP-Llama-3-8B-Instruct-CC-Finetuned/tree/main) for classification. Or replace it with the copy within this directory.:
@@ -271,24 +268,37 @@ import { CLIPProcessor, CLIPModel } from '@huggingface/transformers';
 import sharp from 'sharp';
 
 async function identifyAnimal(imageBuffer) {
-  const processor = new CLIPProcessor.from_pretrained('openai/clip-vit-base-patch32');
-  const model = new CLIPModel.from_pretrained('openai/clip-vit-base-patch32');
+// Load the processor and model
+const processor = await CLIPProcessor.from_pretrained('openai/clip-vit-large-patch14-336');
+const model = await CLIPModel.from_pretrained('microsoft/LLM2CLIP-Llama-3-8B-Instruct-CC-Finetuned');
 
-  // const imageBuffer = readFileSync(imagePath);
-  // 
-  // Process the image buffer
-  const image = await sharp(imageBuffer)
-    .resize(224, 224)
-    .toFormat('png')
-    .toBuffer();
+// Process the image buffer
+const image = await sharp(imageBuffer)
+  .resize(224, 224)
+  .toFormat('png')
+  .toBuffer();
 
-  const inputs = processor(images=image, return_tensors="pt");
-  // const outputs = await model(inputs);
-  // const logits_per_image = outputs.logits_per_image;  // this is the image-text similarity score
-  // const probs = logits_per_image.softmax(dim=1);  // we can take the softmax to get the label probabilities
+const inputs = processor(images=image, return_tensors="pt").pixel_values.to('cuda');
+const outputs = await model.get_image_features(inputs);
 
+// Assuming you have a method to classify the image features
+const detectedAnimal = classifyImageFeatures(outputs);
+
+// Generate a caption for the image (if needed)
+const caption = `This is a ${detectedAnimal}.`;
+
+return {
+  animal: detectedAnimal,
+  caption: caption,
+};
+}
+
+// Dummy function to classify image features (replace with actual implementation)
+async function classifyImageFeatures() {
+  // Implement your classification logic here
   // Generate a caption for the image
   const captionResult = await model.generate_caption(inputs);
+  // Generate a caption for the image (if needed)
   const caption = captionResult[0]?.generated_text || 'No caption generated';
   console.log(`Generated Caption: ${caption}`);
 
@@ -314,7 +324,6 @@ export default identifyAnimal;
 -  AI Agent: In 'app/api/agent.js', integrate LlamaIndex and use Axios to query Wikipedia and analyze the animal. Or replace it with the copy within this directory.:
 ```
 import axios from 'axios';
-// const axios = require('axios');
 
 async function fetchAnimalInfo(animalName) {
   if (animalName === 'unknown') {
