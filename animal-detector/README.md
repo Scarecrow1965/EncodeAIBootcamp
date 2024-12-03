@@ -85,7 +85,7 @@ export default function Home() {
 
     try {
       setIsLoading(true);
-      const { data } = await axios.post("/api/upload", formData);
+      const { data } = await axios.post("/api/route", formData);
       setResult(data);
     } catch (error) {
       console.error("Error:", error);
