@@ -137,7 +137,7 @@ export default function Home() {
 
     try {
       setIsLoading(true);
-      const { data } = await axios.post("/api/upload", formData);
+      const { data } = await axios.post("/api/route", formData);
       setResult(data);
     } catch (error) {
       console.error("Error:", error);
@@ -168,7 +168,7 @@ export default function Home() {
           className="block text-lg font-medium text-white-700"
           htmlFor="file-upload"
         >
-          Upload an image:
+          Upload an .PNG image ONLY:
         </label>
         <input
           id="file-upload"
@@ -178,9 +178,9 @@ export default function Home() {
           onChange={handleImageUpload}
         />
       </div>
-      <h2 className="text-xl font-bold">This is the pic you have submitted:</h2>
       {imagePreview && (
         <div className="mb-4">
+          <h2 className="text-xl font-bold">This is the pic you have submitted:</h2>
           <Image
             src={imagePreview}
             alt="Uploaded Preview"
@@ -213,6 +213,13 @@ export default function Home() {
                   <li key={index}>{animal}</li>
                 ))}
               </ul>
+              <h2 className="text-xl font-bold">Processed Image:</h2>
+              <Image
+                src={`data:image/png;base64,${result.image}`}
+                alt="Processed Image"
+                width={400}
+                height={400}
+              />
             </>
           )}
         </div>

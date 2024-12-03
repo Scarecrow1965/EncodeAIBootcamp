@@ -1,5 +1,4 @@
 import axios from 'axios';
-// const axios = require('axios');
 
 async function fetchAnimalInfo(animalName) {
   if (animalName === 'unknown') {
